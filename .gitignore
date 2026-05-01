@@ -13,3 +13,10 @@
 # Env files (defence-in-depth)
 **/.env
 **/.env.local
+
+# Local planning and tracking files
+.claude/
+My Learnings.md
+Runn - Lesson Plan Brief.md
+Runn - Lesson Plan.md
+Runn - Sprint Plan.md
