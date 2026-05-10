@@ -15,8 +15,9 @@ export default function PlannerView() {
 	})
 	
 	useEffect(() => {
+		const controller = new AbortController()
 		const weekStart = getWeekStart(weekOffset)
-		 fetch(`http://localhost:3001/capacity?weekStart=${weekStart}`)
+		 fetch(`http://localhost:3001/capacity?weekStart=${weekStart}`, {signal: controller.signal})
 			.then(res => res.json())
 			.then(data => {
 				const map: Record<string, number> = {}
@@ -25,6 +26,11 @@ export default function PlannerView() {
 				})
 				setCapacity(map)
 			})
+			.catch(err => {
+				if (err.name === 'AbortError') return
+				console.error(err)
+			})
+			return () => controller.abort()
 	}, [weekOffset])
 
 	if (loading) return <p>Loading...</p>
